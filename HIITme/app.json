@@ -1,4 +1,5 @@
 {
-  "name": "HIITme",
-  "displayName": "HIITme"
+  "expo": {
+    "sdkVersion": "26.0.0"
+  }
 }
