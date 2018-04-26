@@ -6,7 +6,9 @@ import * as  firebase from 'firebase';
 require('firebase/firestore');
 import { Provider } from 'react-redux';
 import store from './client/store';
-
+import HomeScreen from './client/components/AppComponents/HomeScreen';
+import LoginScreen from './client/components/AppComponents/Login/LoginScreen';
+import { StackNavigator } from 'react-navigation';
 //Firebase middleware
 // const admin = require('firebase-admin');
 // const functions = require('firebase-functions');
@@ -16,27 +18,28 @@ import store from './client/store';
 // var db = admin.firestore();
 
 export default class App extends React.Component {
+  static navigationOptions = {
+    title: 'HIITme'
+};
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <Text style={styles.text}>Hello World!</Text>
-          <TestComponent />
-        </View>
+          <AppNavigator />
       </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    justifyContent: 'center'
+const AppNavigator = StackNavigator(
+  {
+      Home: {
+          screen: HomeScreen
+      },
+      Login: {
+          screen: LoginScreen
+      },
   },
-  text: {
-    color: '#42bff4',
-    fontSize: 50
+  {
+      initialRouteName: 'Home'
   }
-});
+);
