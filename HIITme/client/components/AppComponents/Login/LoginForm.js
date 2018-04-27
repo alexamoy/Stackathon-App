@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, StatusBar } from '
 import {
     StackNavigator,
 } from 'react-navigation';
-// import TimerScreen from '../TimerScreen';
+import TimerScreen from '../Timer/TimerScreen';
 
 export class LoginForm extends Component {
     render() {
