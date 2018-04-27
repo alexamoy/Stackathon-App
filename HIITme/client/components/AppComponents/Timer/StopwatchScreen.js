@@ -76,7 +76,7 @@ function LapsTable({ intervals, timer }) {
         </ScrollView>
     )
 }
-export default class TimerScreen extends Component {
+export default class StopwatchScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -140,7 +140,6 @@ export default class TimerScreen extends Component {
         }, 100)
     }
     render() {
-        const { navigate } = this.props.navigation;
         const { now, start, intervals } = this.state;
         const timer = now - start;
         let pic = {
@@ -148,7 +147,7 @@ export default class TimerScreen extends Component {
         };
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>Timer</Text>
+                <Text style={styles.text}>Stopwatch</Text>
                 <Timer interval={intervals.reduce((total, current) => total + current, 0) + timer} style={styles.timer} />
                 {intervals.length === 0 && (
                     <ButtonsRow>
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 25,
+        paddingTop: 15,
         backgroundColor: '#ffffff',
         paddingHorizontal: 25
     },

@@ -5,9 +5,11 @@ import * as  firebase from 'firebase';
 require('firebase/firestore');
 import { Provider } from 'react-redux';
 import store from './client/store';
-import HomeScreen from './client/components/AppComponents/HomeScreen';
+import WelcomeScreen from './client/components/AppComponents/WelcomeScreen';
 import LoginScreen from './client/components/AppComponents/Login/LoginScreen';
-import TimerScreen from './client/components/AppComponents/Timer/TimerScreen';
+import StopwatchScreen from './client/components/AppComponents/Timer/StopwatchScreen';
+import CreateWorkoutScreen from './client/components/AppComponents/CreateWorkoutScreen';
+import HomeScreen from './client/components/AppComponents/HomeScreen';
 import { StackNavigator } from 'react-navigation';
 import { Asset, AppLoading } from 'expo';
 //Firebase middleware
@@ -30,17 +32,23 @@ export default class App extends React.Component {
 
 const AppNavigator = StackNavigator(
   {
-    Home: {
-      screen: HomeScreen
+    Welcome: {
+      screen: WelcomeScreen
     },
     Login: {
       screen: LoginScreen
     },
-    Timer: {
-      screen: TimerScreen
+    Home: {
+      screen: HomeScreen
+    },
+    CreateWorkout: {
+      screen: CreateWorkoutScreen
+    },
+    Stopwatch: {
+      screen: StopwatchScreen
     }
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'Welcome'
   }
 );
