@@ -4,8 +4,8 @@ import thunkMiddleware from 'redux-thunk'
 //STATE
 initialState = {
     intervalTime: 30,
-    exercises: [],
-    sets: 0,
+    exercises: ['pushups'],
+    sets: 1,
     restTime: 0,
     selectedIndex: 0
 }
