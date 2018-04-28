@@ -1,52 +1,55 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
-import {
-    StackNavigator,
-} from 'react-navigation';
-import LoginScreen from './Login/LoginScreen';
-
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput } from 'react-native';
+import store from '../../store';
+import { ButtonGroup } from 'react-native-elements';
+import CreateWorkoutScreen from './CreateWorkoutScreen';
+import StopwatchScreen from './Timer/StopwatchScreen';
 export default class HomeScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = store.getState();
+        this.updateIndex = this.updateIndex.bind(this);
+    }
     static navigationOptions = {
-        title: 'HIITme'
+        title: 'Home'
     };
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    }
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+    updateIndex(selectedIndex) {
+        this.setState({ selectedIndex });
+    }
     render() {
         const { navigate } = this.props.navigation;
-        let pic = {
-            uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/14262-200.png'
-        };
+        const buttons = ['Create', 'Stopwatch'];
         return (
-            <View style={styles.container}>
-                <Image source={pic} style={styles.icon} />
-                <Text style={styles.title}>HIITme</Text>
-                <Text style={styles.description}>Your not so friendly interval training coach</Text>
-                <Button onPress={() => navigate('Login')} title="Get Started" color='#42bff4' style={styles.button} />
-            </View>
+            <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={80}>
+                <View style={styles.container}>
+                    <ButtonGroup onPress={this.updateIndex} selectedIndex={this.state.selectedIndex} buttons={buttons} containerStyle={{ height: 40 }} 
+                    innerBorderStyle={{color: 'rgb(0, 179, 255)'}}
+                    textStyle={{color: 'rgb(0, 179, 255)'}}
+                    selectedTextStyle={{color: 'rgb(0, 179, 255)'}}/>
+                    {
+                        this.state.selectedIndex===0
+                        ?
+                        <CreateWorkoutScreen navigation={navigate}/>
+                        :
+                        <StopwatchScreen navigation={navigate}/>
+                    }
+                </View>
+            </KeyboardAvoidingView>
         )
     }
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#ffffff',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ffffff'
-    },
-    title: {
-        color: '#42bff4',
-        fontSize: 70
-    },
-    description: {
-        color: '#42bff4',
-        fontSize: 15,
-        opacity: .8
-    },
-    icon: {
-        width: 150,
-        height: 150,
-        alignItems: 'center'
+        paddingTop: 10
     }
 });
-
-

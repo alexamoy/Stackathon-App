@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, Alert, KeyboardAvoidingView, TextInput, 
 import {
     StackNavigator,
 } from 'react-navigation';
-import { LoginForm } from './LoginForm';
 
 export default class LoginScreen extends Component {
     static navigationOptions = {
@@ -37,7 +36,7 @@ export default class LoginScreen extends Component {
                             secureTextEntry
                             ref={(input) => this.passwordInput = input}
                             returnKeyType='go' />
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate('Timer')} >
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate('Home')} >
                             <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
@@ -69,10 +68,12 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         width: 230,
-        backgroundColor: 'rgba(66, 191, 244, .3)',
+        backgroundColor: 'rgba(66, 191, 244, .6)',
         marginBottom: 20,
         color: '#FFF',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        fontWeight: '300',
+        borderRadius: 10
     },
     buttonContainer: {
         backgroundColor: 'rgb(0, 179, 255)',

@@ -1,3 +1,4 @@
-import HomeScreen from './HomeScreen';
+import WelcomeScreen from './WelcomeScreen';
 import LoginScreen from './Login/LoginScreen';
-export { HomeScreen, LoginScreen } from './HomeScreen';
+import StopwatchScreen from './Timer/Stopwatch';
+export { WelcomeScreen, LoginScreen };
