@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, Button } from 'react-native';
-import store from '../../store/index';
+import store, {createWorkout} from '../../store/index';
 import { ButtonGroup } from 'react-native-elements';
 
 
@@ -9,6 +9,7 @@ export default class CreateWorkoutScreen extends Component {
         super(props);
         this.state = store.getState();
         this.updateIndex = this.updateIndex.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     static navigationOptions = {
         title: 'Your Workout'
@@ -22,52 +23,70 @@ export default class CreateWorkoutScreen extends Component {
     updateIndex(selectedIndex) {
         this.setState({ selectedIndex });
     }
+    handleChange(input, name) {
+        store.dispatch(createWorkout(name, Number(input)))
+    }
     render() {
-        console.log('this.state', this.state.intervalTime);
+        const navigate = this.props.navigation;
+        let newWorkout = this.state.newWorkout;
+        let total = newWorkout.intervalTime * newWorkout.exercises.length * newWorkout.sets + newWorkout.restTime * (newWorkout.sets - 1); 
+        let minutes = Math.floor(total / 60);
+        let seconds = (Math.floor(total % 60) / 10) * 10;
+        let setTotal = newWorkout.intervalTime * newWorkout.exercises.length;
+        let setMinutes = Math.floor(setTotal / 60); 
+        let setSeconds = (Math.floor(setTotal % 60) / 10) * 10;
         return (
-            <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={80}>
+            <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={60}>
                 <View style={styles.container}>
                     <Text style={styles.header}>Customize your workout!</Text>
                     <View style={styles.formContainer}>
                         <View style={styles.options}>
                             <Text style={styles.left}>Interval Time</Text>
                             <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={this.state.intervalTime.toString()} />
+                                <TextInput 
+                                style={styles.right} 
+                                onChangeText={input => this.handleChange(input, 'intervalTime')} 
+                                defaultValue={this.state.intervalTime.toString()} />
 
-                            </View>
-                        </View>
-                        <View style={styles.options}>
-                            <Text style={styles.left}>Number of Sets</Text>
-                            <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={this.state.sets.toString()} />
-
-                            </View>
-                        </View>
-                        <View style={styles.options}>
-                            <Text style={styles.left}>Total Set Time</Text>
-                            <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={(this.state.intervalTime * this.state.exercises.length).toString()} />
-
-                            </View>
-                        </View>
-                        <View style={styles.options}>
-                            <Text style={styles.left}>Rest</Text>
-                            <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={this.state.restTime.toString()} />
                             </View>
                         </View>
                         <View style={styles.options}>
                             <Text style={styles.left}>Exercises</Text>
                             <View style={styles.selectionContainer}>
-                                {this.state.exercises.map(exercise => {
-                                    <TextInput style={styles.right} defaultValue={exercise} />
-                                })} />
+                                <TextInput style={styles.right} defaultValue={this.state.exercises[0]} />
+                            </View>
+                        </View>
+                        <View style={styles.optionsTotal}>
+                            <Text style={styles.noEditLeft}>Total Set Time</Text>
+                            <View style={styles.selectionContainer}>
+                                <Text style={styles.noEditRight}>
+                                {setMinutes}:{setSeconds}
+                                </Text>
                             </View>
                         </View>
                         <View style={styles.options}>
-                            <Text style={styles.left}>Total Workout Time</Text>
+                        <Text style={styles.left}>Number of Sets</Text>
+                        <View style={styles.selectionContainer}>
+                            <TextInput style={styles.right} onChangeText={input => this.handleChange(input, 'sets')} 
+                            defaultValue={this.state.sets ? this.state.sets.toString() : ''} />
+                        </View>
+                    </View>
+                        <View style={styles.options}>
+                            <Text style={styles.left}>Rest</Text>
                             <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={((this.state.intervalTime * this.state.exercises.length * this.state.sets) + this.state.restTime * (this.state.sets - 1)).toString()} />
+                                <TextInput 
+                                style={styles.right} 
+                                onChangeText={input => this.handleChange(input, 'restTime')}
+                                defaultValue={this.state.restTime.toString()} />
+                            </View>
+                        </View>
+
+                        <View style={styles.optionsTotal}>
+                            <Text style={styles.noEditLeft}>Total Workout Time</Text>
+                            <View style={styles.selectionContainer}>
+                                <Text style={styles.noEditRight} >
+                                {minutes}:{seconds}
+                                </Text>
                             </View>
                         </View>
                         <View style={styles.buttonContainer} >
@@ -112,7 +131,7 @@ const styles = StyleSheet.create({
         width: 200,
         marginTop: 20,
         justifyContent: 'center',
-        
+
     },
     buttonText: {
         textAlign: 'center',
@@ -125,9 +144,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderColor: '#ffffff',
         borderTopWidth: 2,
-        paddingVertical: 10,
+        paddingVertical: 5,
         backgroundColor: 'rgba(0, 179, 255, .1)',
-        margin: 10
+        margin: 5
+    },
+    optionsTotal: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderColor: '#rgb(0, 179, 255)',
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        paddingVertical: 5,
+        backgroundColor: 'rgba(0, 179, 255, .1)',
+        margin: 5
     },
     left: {
         color: '#000000',
@@ -149,5 +178,17 @@ const styles = StyleSheet.create({
         height: 5,
         borderRadius: 5,
         fontSize: 5
+    },
+    noEditLeft: {
+        color: '#000000',
+        fontSize: 20,
+        paddingHorizontal: 10,
+        color: 'rgb(0, 179, 255)'
+    },
+    noEditRight: {
+        color: '#000000',
+        fontSize: 20,
+        paddingHorizontal: 10,
+        color: 'rgb(0, 179, 255)'
     }
 })

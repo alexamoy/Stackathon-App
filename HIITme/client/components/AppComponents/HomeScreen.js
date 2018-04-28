@@ -35,9 +35,9 @@ export default class HomeScreen extends Component {
                     {
                         this.state.selectedIndex===0
                         ?
-                        <CreateWorkoutScreen />
+                        <CreateWorkoutScreen navigation={navigate}/>
                         :
-                        <StopwatchScreen />
+                        <StopwatchScreen navigation={navigate}/>
                     }
                 </View>
             </KeyboardAvoidingView>
