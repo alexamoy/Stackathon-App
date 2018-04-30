@@ -10,6 +10,7 @@ import LoginScreen from './client/components/AppComponents/Login/LoginScreen';
 import StopwatchScreen from './client/components/AppComponents/Timer/StopwatchScreen';
 import CreateWorkoutScreen from './client/components/AppComponents/CreateWorkoutScreen';
 import HomeScreen from './client/components/AppComponents/HomeScreen';
+import WorkoutTimerScreen from './client/components/AppComponents/WorkoutTimerScreen';
 import { StackNavigator } from 'react-navigation';
 import { Asset, AppLoading } from 'expo';
 //Firebase middleware
@@ -46,6 +47,9 @@ const AppNavigator = StackNavigator(
     },
     Stopwatch: {
       screen: StopwatchScreen
+    },
+    WorkoutTimer: {
+      screen: WorkoutTimerScreen
     }
   },
   {

@@ -3,8 +3,13 @@ import { StyleSheet, Text, View, Image, Alert, KeyboardAvoidingView, TextInput, 
 import {
     StackNavigator,
 } from 'react-navigation';
+import store from '../../../store';
 
 export default class LoginScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = store.getState();
+    }
     static navigationOptions = {
         title: 'Login'
     };
