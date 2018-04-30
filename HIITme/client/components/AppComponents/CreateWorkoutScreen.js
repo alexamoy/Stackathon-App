@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, Button } from 'react-native';
-import store, {createWorkout} from '../../store/index';
+import store, { createWorkout, setWorkout } from '../../store/index';
 import { ButtonGroup } from 'react-native-elements';
 
 
@@ -10,6 +10,7 @@ export default class CreateWorkoutScreen extends Component {
         this.state = store.getState();
         this.updateIndex = this.updateIndex.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     static navigationOptions = {
         title: 'Your Workout'
@@ -25,15 +26,20 @@ export default class CreateWorkoutScreen extends Component {
     }
     handleChange(input, name) {
         store.dispatch(createWorkout(name, Number(input)))
+
+    }
+    handleSubmit() {
+        const { intervalTime, exercises, sets, restTime } = this.state.newWorkout;
+        store.dispatch(setWorkout({ intervalTime: intervalTime, exercises: exercises, sets: sets, restTime: restTime }));
     }
     render() {
         const navigate = this.props.navigation;
         let newWorkout = this.state.newWorkout;
-        let total = newWorkout.intervalTime * newWorkout.exercises.length * newWorkout.sets + newWorkout.restTime * (newWorkout.sets - 1); 
+        let total = newWorkout.intervalTime * newWorkout.exercises.length * newWorkout.sets + newWorkout.restTime * (newWorkout.sets - 1);
         let minutes = Math.floor(total / 60);
         let seconds = (Math.floor(total % 60) / 10) * 10;
         let setTotal = newWorkout.intervalTime * newWorkout.exercises.length;
-        let setMinutes = Math.floor(setTotal / 60); 
+        let setMinutes = Math.floor(setTotal / 60);
         let setSeconds = (Math.floor(setTotal % 60) / 10) * 10;
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={60}>
@@ -43,41 +49,51 @@ export default class CreateWorkoutScreen extends Component {
                         <View style={styles.options}>
                             <Text style={styles.left}>Interval Time</Text>
                             <View style={styles.selectionContainer}>
-                                <TextInput 
-                                style={styles.right} 
-                                onChangeText={input => this.handleChange(input, 'intervalTime')} 
-                                defaultValue={this.state.intervalTime.toString()} />
+                                <TextInput
+                                    style={styles.right}
+                                    onChangeText={input => this.handleChange(input, 'intervalTime')}
+                                    defaultValue={this.state.intervalTime.toString()} />
 
                             </View>
                         </View>
-                        <View style={styles.options}>
+                        <View style={styles.exerciseContainer}>
                             <Text style={styles.left}>Exercises</Text>
                             <View style={styles.selectionContainer}>
-                                <TextInput style={styles.right} defaultValue={this.state.exercises[0]} />
+                                {
+                                    this.state.exercises.map((exercise, idx) => {
+                                        return (
+                                            <TextInput
+                                                style={styles.right}
+                                                defaultValue={exercise}
+                                                onChangeText={input => this.handleChange(input, 'exercises', idx)}
+                                            />
+                                        )
+                                    })
+                                }
                             </View>
                         </View>
                         <View style={styles.optionsTotal}>
                             <Text style={styles.noEditLeft}>Total Set Time</Text>
                             <View style={styles.selectionContainer}>
                                 <Text style={styles.noEditRight}>
-                                {setMinutes}:{setSeconds}
+                                    {setMinutes}:{setSeconds}
                                 </Text>
                             </View>
                         </View>
                         <View style={styles.options}>
-                        <Text style={styles.left}>Number of Sets</Text>
-                        <View style={styles.selectionContainer}>
-                            <TextInput style={styles.right} onChangeText={input => this.handleChange(input, 'sets')} 
-                            defaultValue={this.state.sets ? this.state.sets.toString() : ''} />
+                            <Text style={styles.left}>Number of Sets</Text>
+                            <View style={styles.selectionContainer}>
+                                <TextInput style={styles.right} onChangeText={input => this.handleChange(input, 'sets')}
+                                    defaultValue={this.state.sets ? this.state.sets.toString() : ''} />
+                            </View>
                         </View>
-                    </View>
                         <View style={styles.options}>
                             <Text style={styles.left}>Rest</Text>
                             <View style={styles.selectionContainer}>
-                                <TextInput 
-                                style={styles.right} 
-                                onChangeText={input => this.handleChange(input, 'restTime')}
-                                defaultValue={this.state.restTime.toString()} />
+                                <TextInput
+                                    style={styles.right}
+                                    onChangeText={input => this.handleChange(input, 'restTime')}
+                                    defaultValue={this.state.restTime.toString()} />
                             </View>
                         </View>
 
@@ -85,16 +101,21 @@ export default class CreateWorkoutScreen extends Component {
                             <Text style={styles.noEditLeft}>Total Workout Time</Text>
                             <View style={styles.selectionContainer}>
                                 <Text style={styles.noEditRight} >
-                                {minutes}:{seconds}
+                                    {minutes}:{seconds}
                                 </Text>
                             </View>
                         </View>
+                        </View>
                         <View style={styles.buttonContainer} >
-                            <TouchableOpacity onPress={() => navigate('Stopwatch')}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.handleSubmit();
+                                    this.props.updateIndex(2)
+                                }}
+                            >
                                 <Text style={styles.buttonText}>Create Workout</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
                 </View>
             </KeyboardAvoidingView>
         )
@@ -116,14 +137,6 @@ const styles = StyleSheet.create({
     formContainer: {
         width: 350,
         paddingTop: 20
-    },
-    input: {
-        height: 50,
-        width: 230,
-        backgroundColor: 'rgba(66, 191, 244, .2)',
-        marginBottom: 20,
-        color: '#FFF',
-        paddingHorizontal: 10
     },
     buttonContainer: {
         backgroundColor: 'rgb(0, 179, 255)',
@@ -161,6 +174,7 @@ const styles = StyleSheet.create({
     left: {
         color: '#000000',
         fontSize: 20,
+        fontWeight: '500',
         paddingHorizontal: 10,
         color: 'rgb(131, 132, 135)'
     },
@@ -170,6 +184,7 @@ const styles = StyleSheet.create({
     right: {
         color: '#000000',
         fontSize: 20,
+        fontWeight: '200',
         paddingHorizontal: 10,
         color: 'rgb(131, 132, 135)'
     },
@@ -190,5 +205,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingHorizontal: 10,
         color: 'rgb(0, 179, 255)'
+    },
+    exerciseContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        borderColor: '#ffffff',
+        borderTopWidth: 2,
+        paddingVertical: 10,
+        backgroundColor: 'rgba(0, 179, 255, .1)',
+        margin: 5
     }
 })

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Alert, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
-import {
-    StackNavigator,
-} from 'react-navigation';
 import moment from 'moment';
 
 function Timer({ interval, style }) {
@@ -89,7 +86,7 @@ export default class StopwatchScreen extends Component {
         clearInterval(this.timer);
     }
     static navigationOptions = {
-        title: 'Timer'
+        title: 'Stopwatch'
     };
     start = () => {
         const now = new Date().getTime()
@@ -138,6 +135,7 @@ export default class StopwatchScreen extends Component {
         this.timer = setInterval(() => {
             this.setState({ now: new Date().getTime() })
         }, 100)
+        console.log(this.timer)
     }
     render() {
         const { now, start, intervals } = this.state;

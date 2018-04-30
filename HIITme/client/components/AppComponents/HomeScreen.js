@@ -4,6 +4,8 @@ import store from '../../store';
 import { ButtonGroup } from 'react-native-elements';
 import CreateWorkoutScreen from './CreateWorkoutScreen';
 import StopwatchScreen from './Timer/StopwatchScreen';
+import WorkoutTimerScreen from './WorkoutTimerScreen';
+
 export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +26,7 @@ export default class HomeScreen extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
-        const buttons = ['Create', 'Stopwatch'];
+        const buttons = ['Create', 'Stopwatch', 'Workout'];
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={80}>
                 <View style={styles.container}>
@@ -33,11 +35,25 @@ export default class HomeScreen extends Component {
                     textStyle={{color: 'rgb(0, 179, 255)'}}
                     selectedTextStyle={{color: 'rgb(0, 179, 255)'}}/>
                     {
-                        this.state.selectedIndex===0
-                        ?
-                        <CreateWorkoutScreen navigation={navigate}/>
-                        :
+                        this.state.selectedIndex===0 &&
+                        <CreateWorkoutScreen navigation={navigate} updateIndex={this.updateIndex}/>
+                    }
+                    {
+                        this.state.selectedIndex===1 &&
                         <StopwatchScreen navigation={navigate}/>
+                    }
+                    {
+                        this.state.selectedIndex===2 &&
+                        <WorkoutTimerScreen 
+                        navigation={navigate} 
+                        intervalTime={this.state.intervalTime}
+                        exercises={this.state.exercises}
+                        sets={this.state.sets}
+                        restTime={this.state.restTime}
+                        motivations={this.state.motivations}
+                        finalWords={this.state.finalWords}
+                        motivationalMemes={this.state.motivationalMemes}
+                        />
                     }
                 </View>
             </KeyboardAvoidingView>
