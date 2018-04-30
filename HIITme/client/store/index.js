@@ -30,7 +30,7 @@ initialState = {
     ],
     motivationalMemes: [
         'https://www.askideas.com/media/36/Oh-You-Sore-From-Working-Out-But-Did-You-Die-Funny-Exercise-Meme-Image.jpg',
-        'http://www.vitamin-ha.com/wp-content/uploads/2015/09/Funny-Workout-Motivation-17.jpg',
+        'https://i.pinimg.com/originals/65/c0/78/65c078e16f34484e0dd0005d26563bf6.jpg',
         'https://i.pinimg.com/originals/b7/05/cb/b705cbc3042a2946ff2a8cfb3efa2c97.jpg',
         'http://www.bajiroo.com/wp-content/uploads/2015/10/funny-fun-lol-gym-workout-memes-pics-images-photos-pictures-bajiroo-20.png',
         'https://i.pinimg.com/originals/d5/fc/7f/d5fc7f9cf9389c2e771a3c4f2cb56250.jpg',
