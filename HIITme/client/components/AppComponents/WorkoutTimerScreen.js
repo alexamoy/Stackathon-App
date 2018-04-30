@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Alert, KeyboardAvoidingView, ScrollView, TouchableOpacity, AlertIOS } from 'react-native';
 import moment from 'moment';
-import Expo from 'expo';
 
 function Timer({ interval, style }) {
     const num = (n) => n < 10 ? '0' + n : n;
@@ -192,14 +191,7 @@ export default class StopwatchScreen extends Component {
             lineUp.push('REST');
         }
         if (elapsed > iTime) {
-            // const soundObject = new Expo.Audio.Sound();
-            // try {
-            //     await soundObject.loadAsync(require('../../../assets/sounds/set_sound.mp3'));
-            //     await soundObject.playAsync();
-            //     // Your sound is playing!
-            // } catch (error) {
-            //     // An error occurred!
-            // }
+
             let random = this.randomInsult(this.props.motivations.length);
             let meme = this.randomInsult(this.props.motivationalMemes.length)
             this.setState({
@@ -339,8 +331,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'stretch',
         justifyContent: 'space-between',
-        marginTop: 20,
-        marginBottom: 30
+        marginTop: 10,
+        marginBottom: 10
     },
     lapText: {
         color: '#000000',
@@ -378,7 +370,7 @@ const styles = StyleSheet.create({
         color: '#42bff4'
     },
     meme: {
-        width: 200,
-        height: 200,
+        width: 215,
+        height: 215,
     }
 });
