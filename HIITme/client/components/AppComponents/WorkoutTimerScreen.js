@@ -103,18 +103,35 @@ export default class StopwatchScreen extends Component {
     countdown = (time, interval, exercises) => {
         const now = new Date().getTime();
         const total = now + time;
-        let intervalSet = this.props.exercises.map((exercise, idx) => interval * (idx + 1));
-        // if(this.props.restTime){
-        //     for(let i=1; i<this.props.sets;i++){
-        //         intervalSet.push(this.props.restTime*1000);
-        //         intervalSet.concat(exercises.map((exercise, idx) => interval * (idx + 1)));
-        //     }
-        // }
+        // let intervalSet = this.props.exercises.map((exercise, idx) => interval * (idx + 1));
+        let intervalSet = [];
+        let prev = 0;
+        let exerciseList = [];
+        for (var i = 0; i < this.props.sets; i++) {
+            this.props.exercises.forEach(() => {
+                let time = interval + prev
+                intervalSet.push(time);
+                prev = time;
+            })
+            if (i !== this.props.sets - 1) {
+                let rest = this.props.restTime * 1000 + prev
+                intervalSet.push(rest);
+                prev = rest;
+            }
+        }
+        for (var x = 0; x < this.props.sets; x++) {
+            exerciseList = exerciseList.concat(exercises);
+            if (x !== this.props.sets - 1) {
+                exerciseList.push('REST')
+            }
+        }
+        console.log('exerciseList', exerciseList)
         this.setState({
             start: now,
             now,
             end: total,
-            intervals: intervalSet
+            intervals: intervalSet,
+            exercises: exerciseList
         })
         this.timer = setInterval(() => {
             this.setState({ now: new Date().getTime() })
