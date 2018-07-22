@@ -9,4 +9,4 @@
 - Generates random aggressive motivational quote and meme on each interval during custom workout
 
 ## Screenshots ##
-![sc1](https://github.com/alexamoy/Stackathon-App/tree/master/HIITme/screenshots/sc1.png)
+![sc1](https://github.com/alexamoy/Stackathon-App/raw/master/HIITme/screenshots/sc1.png "Screenshot 1")
