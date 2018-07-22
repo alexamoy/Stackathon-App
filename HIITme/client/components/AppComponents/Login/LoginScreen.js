@@ -22,7 +22,6 @@ export default class LoginScreen extends Component {
   handlePress = async () => {
     const email = this.state.email;
     const password = this.state.password;
-    console.log(this.state)
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
       await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)

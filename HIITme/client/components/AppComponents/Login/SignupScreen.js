@@ -24,7 +24,6 @@ export default class SignupScreen extends Component {
     handlePress = async () => {
       try {
         const newUser = await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        console.log(newUser.uid);
         await db.collection('users').doc(`${newUser.uid}`).set({
           email: this.state.email,
           username: this.state.username
