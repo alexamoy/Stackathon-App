@@ -135,7 +135,6 @@ export default class StopwatchScreen extends Component {
         this.timer = setInterval(() => {
             this.setState({ now: new Date().getTime() })
         }, 100)
-        console.log(this.timer)
     }
     render() {
         const { now, start, intervals } = this.state;

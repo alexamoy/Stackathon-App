@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Alert, KeyboardAvoidingView, ScrollView, TouchableOpacity, AlertIOS } from 'react-native';
 import moment from 'moment';
 
+
 function Timer({ interval, style }) {
     const num = (n) => n < 10 ? '0' + n : n;
     const duration = moment.duration(interval);
@@ -124,7 +125,6 @@ export default class StopwatchScreen extends Component {
                 exerciseList.push('REST')
             }
         }
-        console.log('exerciseList', exerciseList)
         this.setState({
             start: now,
             now,
@@ -221,7 +221,6 @@ export default class StopwatchScreen extends Component {
         }
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>Workout</Text>
                 <Text style={styles.quote}>{this.state.newInsult}</Text>
                 <Timer interval={iTime - elapsed} style={styles.timer} />
                 <View style={styles.timesContainer}>
@@ -275,9 +274,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 15,
+        paddingTop: 5,
         backgroundColor: '#ffffff',
-        paddingHorizontal: 25
+        paddingHorizontal: 20
     },
     quote: {
         color: 'rgb(229, 14, 6)',
@@ -298,12 +297,11 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 80,
         fontWeight: '200',
-        paddingTop: 5,
         width: 113
     },
     timesContainer: {
         width: 350,
-        paddingTop: 20
+        paddingTop: 0
     },
     timerContainer: {
         flexDirection: 'row'
