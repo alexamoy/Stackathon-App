@@ -10,3 +10,5 @@
 
 ## Screenshots ##
 ![sc1](https://github.com/alexamoy/Stackathon-App/raw/master/HIITme/screenshots/sc1.png "Screenshot 1")
+![sc2](https://github.com/alexamoy/Stackathon-App/raw/master/HIITme/screenshots/sc2.png "Screenshot 2")
+![sc3](https://github.com/alexamoy/Stackathon-App/raw/master/HIITme/screenshots/sc3.png "Screenshot 3")
