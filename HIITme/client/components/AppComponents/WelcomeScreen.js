@@ -11,12 +11,9 @@ export default class WelcomeScreen extends Component {
     };
     render() {
         const { navigate } = this.props.navigation;
-        let pic = {
-            uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/14262-200.png'
-        };
         return (
             <View style={styles.container}>
-                <Image source={pic} style={styles.icon} />
+                <Image source={require('../../../assets/images/image.png')}style={styles.icon} />
                 <Text style={styles.title}>HIITme</Text>
                 <Text style={styles.description}>Your not so friendly interval training coach</Text>
                 <TouchableOpacity onPress={() => navigate('Login')} style={styles.buttonContainer} >
@@ -45,8 +42,8 @@ const styles = StyleSheet.create({
         opacity: .8
     },
     icon: {
-        width: 150,
-        height: 150,
+        width: 200,
+        height: 200,
         alignItems: 'center'
     },
     buttonContainer: {
